@@ -2,7 +2,7 @@ package Vehicles;
 
 import javax.swing.*;
 
-public class SpyingGlider extends AirVehicle implements NonEngine, Cloneable {
+public class SpyingGlider extends AirVehicle implements NonEngine {
     private final String power_source;
     private final char energy_type;
     public String getPower_source(){
@@ -35,7 +35,8 @@ public class SpyingGlider extends AirVehicle implements NonEngine, Cloneable {
     }
 
     @Override
-    public SpyingGlider clone() throws CloneNotSupportedException {
-        return new SpyingGlider(this);
+    public Vehicle makeCopy() {
+        return (Vehicle) new SpyingGlider(this);
     }
+
 }

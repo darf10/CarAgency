@@ -36,6 +36,11 @@ public class ElectricBicycle extends TwoWheeledVehicle implements Engine{
     }
 
     @Override
+    public Vehicle makeCopy() {
+        return (Vehicle) new ElectricBicycle(this);
+    }
+
+    @Override
     public String toString(){
         return "Electric bicycle: "+"<br>"+super.toString()+"Fuel consumption is: "+getFuel_consumption()+"<br>"+"Average life span is: "+getAverage_life_span() + " years"+"<br>";
     }

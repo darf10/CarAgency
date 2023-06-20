@@ -19,6 +19,12 @@ public class Jeep extends LandVehicle implements Commercial, Engine{
         setFuel_consumption(fuel_consumption);
         this.average_life_span = average_life_span;
     }
+    public Jeep(Jeep target){
+        super(target);
+        licence_type = target.licence_type;
+        fuel_consumption = target.fuel_consumption;
+        average_life_span = target.average_life_span;
+    }
     public String getLicense() {
         return licence_type;
     }
@@ -47,4 +53,8 @@ public class Jeep extends LandVehicle implements Commercial, Engine{
         return this.getLicense().equals(obj.getLicense()) && this.getFuel_consumption() == obj.getFuel_consumption();
     }
 
+    @Override
+    public Vehicle makeCopy() {
+        return (Vehicle) new Jeep(this);
+    }
 }

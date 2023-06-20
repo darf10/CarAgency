@@ -6,7 +6,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.lang.Cloneable;
 
 
-public abstract class Vehicle implements Cloneable{
+public abstract class Vehicle{
     private double distance;
     private String model;
     private int passengers;
@@ -54,12 +54,6 @@ public abstract class Vehicle implements Cloneable{
     public double getMax_speed(){
         return max_speed;
     }
-
-    @Override
-    public Vehicle clone() throws CloneNotSupportedException {
-        return (Vehicle) super.clone();
-    }
-
     public void move(double distance){
         this.distance += distance;
         Agency.addTotalDistance(distance);
@@ -80,5 +74,6 @@ public abstract class Vehicle implements Cloneable{
     public ReentrantLock getLock(){return lock;}
     public int[] getLockVal(){return lock_val;}
     public void setLockVal(int[] val){lock_val = val;}
+    public abstract Vehicle makeCopy();
 
 }

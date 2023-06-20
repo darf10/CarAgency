@@ -1,5 +1,6 @@
 package Graphic;
 
+import DesignPatterns.MementoCaretaker;
 import DesignPatterns.VehicleDecorator;
 import System.Agency;
 import Vehicles.*;
@@ -20,7 +21,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class MainMenu extends JFrame implements ActionListener {
-    private JButton addButton, resetButton, changeFlagButton, inventoryButton, testDriveButton, buyButton, exitButton;
+    private JButton addButton, resetButton, changeFlagButton, inventoryButton, testDriveButton, buyButton, exitButton, saveButton, loadButton;
     private JPanel mainPanel, imagePanel, optionPanel;
     private JComboBox<ImageIcon> flagButton;
     private JScrollPane scrollBar;
@@ -28,7 +29,9 @@ public class MainMenu extends JFrame implements ActionListener {
     private Agency agency;
     private VehicleDecorator curVehicle;
     private ExecutorService ex;
+    MementoCaretaker mementoCaretaker;
     public MainMenu(Agency agency) {
+        mementoCaretaker = new MementoCaretaker();
         ex = Executors.newFixedThreadPool(6);
         this.agency = agency;
         imagePanel = new JPanel(new FlowLayout());
@@ -81,6 +84,8 @@ public class MainMenu extends JFrame implements ActionListener {
         optionPanel.add(changeFlagButton);
         optionPanel.add(testDriveButton);
         optionPanel.add(buyButton);
+        optionPanel.add(saveButton);
+        optionPanel.add(loadButton);
         optionPanel.add(exitButton);
     }
 
@@ -108,6 +113,12 @@ public class MainMenu extends JFrame implements ActionListener {
         exitButton.addActionListener(this);
         buyButton.setVisible(false);
         testDriveButton.setVisible(false);
+        saveButton = new JButton("Save");
+        saveButton.setFocusable(false);
+        saveButton.addActionListener(this);
+        loadButton = new JButton("Load");
+        loadButton.setFocusable(false);
+        loadButton.addActionListener(this);
     }
 
     @Override
@@ -158,8 +169,20 @@ public class MainMenu extends JFrame implements ActionListener {
         }
         if (e.getSource() == exitButton) {
             new Worker(this, "Exit",curVehicle).execute();
-//            JOptionPane.showMessageDialog(null, "Exit successfully");
-//            dispose();
+        }
+        if (e.getSource() == saveButton) {
+            try {
+                mementoCaretaker.saveMemento(agency.createMemento());
+                JOptionPane.showMessageDialog(null, "Saved");
+            } catch (CloneNotSupportedException exc) {
+                throw new RuntimeException(exc);
+            }
+            refresh();
+        }
+        if (e.getSource() == loadButton) {
+            mementoCaretaker.getMemento(agency);
+            JOptionPane.showMessageDialog(null, "Loading");
+            refresh();
         }
         for (int i = 0; i < images.size(); i++) {
             if (agency.getSize() == 0)

@@ -21,9 +21,10 @@ public class VehicleDecorator implements VehicleI {
         this.status = target.status;
     }
 
-    @Override
-    protected VehicleDecorator clone() throws CloneNotSupportedException {
-        return new VehicleDecorator(this);
+    public VehicleDecorator makeCopy() {
+        VehicleDecorator copy = new VehicleDecorator(vehicle.makeCopy(),this.color);
+        copy.setStatus(this.status);
+        return copy;
     }
 
     public void setStatus(String status){

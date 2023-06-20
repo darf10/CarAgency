@@ -48,6 +48,12 @@ public class Bicycle extends TwoWheeledVehicle implements NonEngine{
         Bicycle bicycle = (Bicycle) o;
         return energy_type == bicycle.energy_type && power_source.equals(bicycle.power_source);
     }
+
+    @Override
+    public Vehicle makeCopy() {
+        return (Vehicle) new Bicycle(this);
+    }
+
     @Override
     public String toString(){
         return "Bicycle: "+"<br>"+super.toString()+" The energy type is: "+getEnergy_type()+"<br>"+"The power source is: "+getPower_source()+"<br>";

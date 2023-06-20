@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.util.Objects;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class AirVehicle extends Vehicle implements AirVehicleI, Cloneable{
+public class AirVehicle extends Vehicle implements AirVehicleI{
 
 
     private String use_type;
@@ -31,6 +31,12 @@ public class AirVehicle extends Vehicle implements AirVehicleI, Cloneable{
             super.move(distance);
         }
     }
+
+    @Override
+    public Vehicle makeCopy() {
+        return (Vehicle)new AirVehicle(this) ;
+    }
+
     public void setUse_type(String use_type) {this.use_type = use_type; }
     public String getUse_type(){return use_type;}
     @Override
@@ -44,10 +50,5 @@ public class AirVehicle extends Vehicle implements AirVehicleI, Cloneable{
         if (o == null || getClass() != o.getClass()) return false;
         AirVehicle that = (AirVehicle) o;
         return Objects.equals(use_type, that.use_type);
-    }
-
-    @Override
-    public AirVehicle clone() throws CloneNotSupportedException {
-        return new AirVehicle(this);
     }
 }

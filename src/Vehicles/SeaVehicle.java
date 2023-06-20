@@ -32,6 +32,12 @@ public class SeaVehicle extends Vehicle implements SeaVehicleI{
             super.move(distance);
         }
     }
+
+    @Override
+    public Vehicle makeCopy() {
+        return (Vehicle) new SeaVehicle(this);
+    }
+
     public void setSail_with_wind(boolean sail_with_wind){
         this.sail_with_wind=sail_with_wind;
     }

@@ -30,8 +30,8 @@ public class Amphibious extends Vehicle implements LandVehicleI,SeaVehicleI, Eng
 
     public Amphibious(Amphibious target){
         super(target);
-        this.landVehicle = target.landVehicle;
-        this.seaVehicle = target.seaVehicle;
+        this.landVehicle = new LandVehicle(target.landVehicle);
+        this.seaVehicle = new SeaVehicle(target.seaVehicle);
         this.fuel_consumption = target.fuel_consumption;
         this.average_life_span = target.average_life_span;
     }
@@ -44,6 +44,12 @@ public class Amphibious extends Vehicle implements LandVehicleI,SeaVehicleI, Eng
             }
         }
     }
+
+    @Override
+    public Vehicle makeCopy() {
+        return (Vehicle) new Amphibious(this);
+    }
+
     @Override
     public double getFuel_consumption() {
         return fuel_consumption;

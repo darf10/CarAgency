@@ -52,4 +52,9 @@ public class PlayingGlider extends AirVehicle implements NonEngine {
             return false;
         return this.getPower_source() == obj.getPower_source() && this.getEnergy_type() == obj.getEnergy_type();
     }
+
+    @Override
+    public Vehicle makeCopy() {
+        return (Vehicle) new PlayingGlider(this);
+    }
 }

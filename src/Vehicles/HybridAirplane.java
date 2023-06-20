@@ -24,18 +24,13 @@ public class HybridAirplane extends Vehicle implements AirVehicleI,SeaVehicleI,L
     }
     public HybridAirplane(HybridAirplane target){
         super(target);
-        this.landVehicle = target.landVehicle;
-        this.seaVehicle = target.seaVehicle;
-        this.airVehicle = target.airVehicle;
+        this.landVehicle = new LandVehicle(target.landVehicle);
+        this.seaVehicle = new SeaVehicle(target.seaVehicle);
+        this.airVehicle = new AirVehicle(target.airVehicle);
         this.average_life_span = target.average_life_span;
         this.fuel_consumption = target.fuel_consumption;
         int[] lockVal = {1,1,1};
         this.setLockVal(lockVal);
-    }
-
-    @Override
-    public HybridAirplane clone() throws CloneNotSupportedException {
-        return new HybridAirplane(this);
     }
 
     @Override
@@ -50,6 +45,12 @@ public class HybridAirplane extends Vehicle implements AirVehicleI,SeaVehicleI,L
             }
         }
     }
+
+    @Override
+    public Vehicle makeCopy() {
+        return (Vehicle)new HybridAirplane(this);
+    }
+
     @Override
     public void setUse_type(String use_type) {
         airVehicle.setUse_type(use_type);

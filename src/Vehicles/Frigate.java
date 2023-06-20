@@ -51,4 +51,8 @@ public class Frigate extends SeaVehicle implements Engine, SeaVehicleI{
         }
         return false;
     }
+    @Override
+    public Vehicle makeCopy() {
+        return (Vehicle) new Frigate(this);
+    }
 }

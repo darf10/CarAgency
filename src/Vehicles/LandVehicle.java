@@ -38,6 +38,12 @@ public class LandVehicle extends Vehicle implements LandVehicleI{
             super.move(distance);
         }
     }
+
+    @Override
+    public Vehicle makeCopy() {
+        return (Vehicle) new LandVehicle(this);
+    }
+
     public int getWheel_count() {
         return wheel_count;
     }

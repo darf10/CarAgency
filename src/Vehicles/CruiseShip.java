@@ -70,4 +70,8 @@ public class CruiseShip extends SeaVehicle implements Engine, Commercial{
         CruiseShip that = (CruiseShip) o;
         return Double.compare(that.fuel_consumption, fuel_consumption) == 0 && Double.compare(that.average_life_span, average_life_span) == 0 && licence_type.equals(that.licence_type);
     }
+    @Override
+    public Vehicle makeCopy() {
+        return (Vehicle) new CruiseShip(this);
+    }
 }
