@@ -37,6 +37,7 @@ public abstract class Vehicle implements Cloneable{
         this.max_speed = obj.max_speed;
         this.image = obj.image;
         this.lock = obj.lock;
+        this.lock_val = obj.lock_val;
     }
     @Override
     public String toString(){
@@ -61,7 +62,7 @@ public abstract class Vehicle implements Cloneable{
 
     public void move(double distance){
         this.distance += distance;
-        Agency.setTotalDistance(distance);
+        Agency.addTotalDistance(distance);
     }
     public String getModel(){
         return model;

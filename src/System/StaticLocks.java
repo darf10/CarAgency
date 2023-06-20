@@ -1,7 +1,5 @@
 package System;
 
-import Vehicles.LandVehicle;
-
 import java.util.concurrent.locks.ReentrantLock;
 
 public class StaticLocks {
@@ -38,6 +36,7 @@ public class StaticLocks {
             }
         }
     }
+    public static int[] getRegistered(){return registerCount;}
 
 }
 

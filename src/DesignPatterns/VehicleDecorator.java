@@ -35,8 +35,7 @@ public class VehicleDecorator implements VehicleI {
 
     @Override
     public String toString(){
-        return "Model: " + this.vehicle.getModel() + "<br>"+"Traveled: " + this.vehicle.getDistance() + " Km" +
-                "<br>"+ "Max speed of " + this.vehicle.getMax_speed() + " Mph"+"<br>"+" Can carry max of " + this.vehicle.getPassengers() + " people"+"<br>";
+        return "Status: " + this.status + "<br>" + this.vehicle.toString();
     }
 
     @Override

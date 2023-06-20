@@ -1,15 +1,11 @@
 package Graphic;
 
 import DesignPatterns.VehicleDecorator;
-import System.Agency.*;
 import Vehicles.*;
 import System.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.concurrent.*;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Worker extends SwingWorker<Void, String> {
     private JFrame frame;
@@ -18,10 +14,6 @@ public class Worker extends SwingWorker<Void, String> {
     private String type;
     private long distance;
     public VehicleDecorator curVehicle;
-
-    private static Thread airVehicleThread;
-    private static Thread landVehicleThread;
-    private static Thread seaVehicleThread;
     private final CountDownLatch cdl;
 
     public Worker(MainMenu menu, String type, VehicleDecorator curVehicle) {
@@ -162,15 +154,14 @@ public class Worker extends SwingWorker<Void, String> {
         JButton confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(e -> {
             if (curVehicle.getLock().tryLock()) {
-                try {
-                    distance = Long.parseLong(textField.getText());
-                    moveVehicle(distance);
-                    frame.dispose();
-                } finally {
-                    curVehicle.getLock().unlock();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Vehicle currently unavailable");
+                curVehicle.setStatus("Performing a test drive");
+                menu.refresh();
+                distance = Long.parseLong(textField.getText());
+                moveVehicle(distance);
+                frame.dispose();
+            }else {
+                JOptionPane.showMessageDialog(null, "Vehicle currently unavailable for test drive");
+                cdl.countDown();
                 frame.dispose();
             }
         });
@@ -195,16 +186,24 @@ public class Worker extends SwingWorker<Void, String> {
             Executors.newSingleThreadScheduledExecutor().schedule(() -> {
                 StaticLocks.unregister(curVehicle.getVehicle().getLockVal());
                 cdl.countDown();
+                JOptionPane.showMessageDialog(null, "Test drive completed");
+                curVehicle.setStatus("Available");
+                menu.refresh();
             }, distance*100, TimeUnit.MILLISECONDS);
 
         }
-        else
-            JOptionPane.showMessageDialog(null, "Current vehicle is not ready for test drive");
+        else {
+            JOptionPane.showMessageDialog(null, "There are no test drivers available");
+            cdl.countDown();
+        }
     }
 
     private boolean checkExit() {
-        if (airVehicleThread != null || landVehicleThread != null || seaVehicleThread != null)
-            return false;
+        int[] registered = StaticLocks.getRegistered();
+        for (int j : registered) {
+            if (j != 0)
+                return false;
+        }
         for (int i = 0; i < menu.getAgency().getSize(); i++) {
             if (menu.getAgency().getVehicleAt(i).getLock().isLocked())
                 return false;
@@ -218,14 +217,19 @@ public class Worker extends SwingWorker<Void, String> {
             case "TestDrive" -> {
                 setTestDriveFrame();
                 cdl.await();
+                curVehicle.getLock().unlock();
             }
             case "Buy" -> {
                 if (curVehicle.getLock().tryLock())
                     try {
                         setBuyFrame();
+                        curVehicle.setStatus("In buying process");
+                        menu.refresh();
                     } finally {
                         cdl.await();
                         curVehicle.getLock().unlock();
+                        curVehicle.setStatus("Available");
+                        menu.refresh();
                     }
             }
             case "ChangeFlag" -> setChangeFlagFrame();
