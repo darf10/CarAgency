@@ -10,16 +10,12 @@ public class SeaVehicle extends Vehicle implements SeaVehicleI{
         super();
         sail_with_wind = false;
         flag = "";
-        int[] lockVal = {1,0,0};
-        this.setLockVal(lockVal);
     }
     public SeaVehicle(String model, int passengers, double max_speed, ImageIcon image, boolean sail_with_wind, String flag)
     {
         super(model, passengers, max_speed, image);
         setFlag(flag);
         setSail_with_wind(sail_with_wind);
-        int[] lockVal = {1,0,0};
-        this.setLockVal(lockVal);
     }
     public SeaVehicle(SeaVehicle target){
         super(target);

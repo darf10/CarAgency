@@ -3,43 +3,36 @@ package System;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class StaticLocks {
-    private static ReentrantLock seaLock;
-    private static ReentrantLock airLock;
-    private static ReentrantLock landLock;
-    private static ReentrantLock[] locks;
-    private static int[] registerCount;
+    private static int registerCount;
+    private static ReentrantLock lock;
 
     public StaticLocks() {
-        registerCount = new int[]{0, 0, 0};
-        seaLock = new ReentrantLock();
-        airLock = new ReentrantLock();
-        landLock = new ReentrantLock();
-        locks = new ReentrantLock[]{seaLock, airLock, landLock};
+        registerCount = 0;
+        lock = new ReentrantLock();
     }
 
-    public static boolean tryRegister(int[] lockVal) {
-        int count = 0;
-        for (int i = 0; i < registerCount.length; i++) {
-            count += registerCount[i];
-        }
-        if (count < 7) {
-
-            return true;
+    public static boolean tryRegister() {
+        if (registerCount < 7) {
+            registerCount++;
+            if (registerCount == 7) {
+                lock.lock();
+            }
         }
         else
             return false;
+        return true;
     }
-}
 
-    public static void unregister(int[] lockVal) {
-        for (int i = 0; i < lockVal.length; i++) {
-            if (registerCount[i] > 0) {
-                registerCount[i] -= lockVal[i];
-            }
+    public static void unregister() {
+        if(registerCount == 7){
+            lock.unlock();
+        }
+        if(registerCount>0){
+            registerCount--;
         }
     }
 
-    public static int[] getRegistered() {
+    public static int getRegistered() {
         return registerCount;
     }
 

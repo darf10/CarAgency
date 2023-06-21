@@ -11,15 +11,11 @@ public class AirVehicle extends Vehicle implements AirVehicleI{
     public AirVehicle(){
         super();
         use_type = "civilian";
-        int[] lockVal = {0,1,0};
-        this.setLockVal(lockVal);
     }
     public AirVehicle(String model, int passengers, double max_speed,ImageIcon image, String use_type)
     {
         super(model, passengers, max_speed, image);
         setUse_type(use_type);
-        int[] lockVal = {0,1,0};
-        this.setLockVal(lockVal);
     }
     public AirVehicle (AirVehicle target){
         super(target);

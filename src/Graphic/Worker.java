@@ -181,10 +181,10 @@ public class Worker extends SwingWorker<Void, String> {
     }
 
     private void moveVehicle(long distance) {
-        if(StaticLocks.tryRegister(curVehicle.getVehicle().getLockVal())) {
+        if(StaticLocks.tryRegister()) {
             curVehicle.move(distance);
             Executors.newSingleThreadScheduledExecutor().schedule(() -> {
-                StaticLocks.unregister(curVehicle.getVehicle().getLockVal());
+                StaticLocks.unregister();
                 cdl.countDown();
                 JOptionPane.showMessageDialog(null, "Test drive completed");
                 curVehicle.setStatus("Available");
@@ -199,11 +199,9 @@ public class Worker extends SwingWorker<Void, String> {
     }
 
     private boolean checkExit() {
-        int[] registered = StaticLocks.getRegistered();
-        for (int j : registered) {
-            if (j != 0)
-                return false;
-        }
+        int registered = StaticLocks.getRegistered();
+        if(registered != 0)
+            return false;
         for (int i = 0; i < menu.getAgency().getSize(); i++) {
             if (menu.getAgency().getVehicleAt(i).getLock().isLocked())
                 return false;

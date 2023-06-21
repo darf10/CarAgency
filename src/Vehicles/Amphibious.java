@@ -15,8 +15,6 @@ public class Amphibious extends Vehicle implements LandVehicleI,SeaVehicleI, Eng
         seaVehicle = new SeaVehicle();
         setFuel_consumption(0);
         setAverage_life_span(0);
-        int[] lockVal = {1,0,1};
-        this.setLockVal(lockVal);
     }
     public Amphibious(String model, int passengers, double max_speed, ImageIcon image, boolean sail_with_wind, int wheel_count, double fuel_consumption, double average_life_span, String flag){
         super(model, passengers, max_speed, image);
@@ -24,8 +22,6 @@ public class Amphibious extends Vehicle implements LandVehicleI,SeaVehicleI, Eng
         seaVehicle = new SeaVehicle(model, passengers, max_speed, image, sail_with_wind, flag);
         setFuel_consumption(fuel_consumption);
         setAverage_life_span(average_life_span);
-        int[] lockVal = {1,0,1};
-        this.setLockVal(lockVal);
     }
 
     public Amphibious(Amphibious target){

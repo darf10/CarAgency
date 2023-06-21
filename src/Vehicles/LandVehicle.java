@@ -11,15 +11,11 @@ public class LandVehicle extends Vehicle implements LandVehicleI{
         super();
         wheel_count = 0;
         road_type = "";
-        int[] lockVal = {0,0,1};
-        this.setLockVal(lockVal);
     }
     public LandVehicle(String model, int passengers, double max_speed, ImageIcon image, int wheel_count, String road_type){
         super(model, passengers, max_speed, image);
         this.wheel_count = wheel_count;
         this.road_type = road_type;
-        int[] lockVal = {0,0,1};
-        this.setLockVal(lockVal);
     }
     public LandVehicle(LandVehicle target){
         super(target);

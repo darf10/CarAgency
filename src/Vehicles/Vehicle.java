@@ -13,7 +13,6 @@ public abstract class Vehicle{
     private double max_speed;
     private ImageIcon image;
     private final ReentrantLock lock;
-    private int[] lock_val;
     public Vehicle(){
         this.model = "";
         this.distance = 0;
@@ -37,7 +36,6 @@ public abstract class Vehicle{
         this.max_speed = obj.max_speed;
         this.image = obj.image;
         this.lock = obj.lock;
-        this.lock_val = obj.lock_val;
     }
     @Override
     public String toString(){
@@ -72,8 +70,6 @@ public abstract class Vehicle{
     }
     public ImageIcon getImage(){return image;}
     public ReentrantLock getLock(){return lock;}
-    public int[] getLockVal(){return lock_val;}
-    public void setLockVal(int[] val){lock_val = val;}
     public abstract Vehicle makeCopy();
 
 }

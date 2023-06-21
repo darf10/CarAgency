@@ -19,8 +19,6 @@ public class HybridAirplane extends Vehicle implements AirVehicleI,SeaVehicleI,L
         airVehicle = new AirVehicle(model, passengers, max_speed,picture, "military");
         setFuel_consumption(fuel_consumption);
         this.average_life_span = average_life_span;
-        int[] lockVal = {1,1,1};
-        this.setLockVal(lockVal);
     }
     public HybridAirplane(HybridAirplane target){
         super(target);
@@ -29,8 +27,6 @@ public class HybridAirplane extends Vehicle implements AirVehicleI,SeaVehicleI,L
         this.airVehicle = new AirVehicle(target.airVehicle);
         this.average_life_span = target.average_life_span;
         this.fuel_consumption = target.fuel_consumption;
-        int[] lockVal = {1,1,1};
-        this.setLockVal(lockVal);
     }
 
     @Override
