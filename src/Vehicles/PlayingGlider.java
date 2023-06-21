@@ -25,11 +25,6 @@ public class PlayingGlider extends AirVehicle implements NonEngine {
     }
 
     @Override
-    public PlayingGlider clone() throws CloneNotSupportedException {
-        return new PlayingGlider(this);
-    }
-
-    @Override
     public String getPower_source() {
         return power_source;
     }

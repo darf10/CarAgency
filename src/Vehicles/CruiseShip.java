@@ -29,10 +29,6 @@ public class CruiseShip extends SeaVehicle implements Engine, Commercial{
         this.licence_type = target.licence_type;
     }
     @Override
-    public CruiseShip clone() throws CloneNotSupportedException {
-        return new CruiseShip(this);
-    }
-    @Override
     public String getLicense() {
         return licence_type;
     }

@@ -101,7 +101,6 @@ public class Agency {
         size++;
     }
     public synchronized void DeleteVehicle(int index) {
-        addTotalDistance(-this.getVehicleAt(index).getDistance());
         if (size == 1) {
             vehicles[size - 1] = null;
         } else {

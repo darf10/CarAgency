@@ -91,8 +91,8 @@ public class Worker extends SwingWorker<Void, String> {
         confirmButton.addActionListener(e -> {
             int flagIndex = flagButton.getSelectedIndex();
             for (int i = 0; i < menu.getAgency().getSize(); i++) {
-                if (menu.getAgency().getVehicleAt(i) instanceof SeaVehicleI)
-                    ((SeaVehicleI) menu.getAgency().getVehicleAt(i)).setFlag(flagString[flagIndex]);
+                if (menu.getAgency().getVehicleAt(i).getVehicle() instanceof SeaVehicleI)
+                    ((SeaVehicleI) menu.getAgency().getVehicleAt(i).getVehicle()).setFlag(flagString[flagIndex]);
             }
             frame.dispose();
             JOptionPane.showMessageDialog(null, "Updating database... Please wait");
@@ -247,7 +247,8 @@ public class Worker extends SwingWorker<Void, String> {
 
     @Override
     protected void done() {
-        if (curVehicle.getLock().isLocked())
-            curVehicle.getLock().unlock();
+        if(curVehicle != null)
+            if (curVehicle.getLock().isLocked())
+                curVehicle.getLock().unlock();
     }
 }

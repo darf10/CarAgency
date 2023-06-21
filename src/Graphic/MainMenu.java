@@ -22,10 +22,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class MainMenu extends JFrame implements ActionListener {
+    private static MainMenu mainMenu = null;
     private JButton addButton, resetButton, changeFlagButton, inventoryButton, testDriveButton, buyButton, exitButton, saveButton, loadButton;
     private JPanel mainPanel, imagePanel, optionPanel, totalDistancePanel;
-    private JComboBox<ImageIcon> flagButton;
-    private JScrollPane scrollBar;
     private Vector<JToggleButton> images;
     private Agency agency;
     private VehicleDecorator curVehicle;
@@ -35,7 +34,7 @@ public class MainMenu extends JFrame implements ActionListener {
     private String currentDistance;
     private VehicleMemento vehicleMemento;
 
-    public MainMenu(Agency agency) {
+    private MainMenu(Agency agency) {
         mementoCaretaker = new MementoCaretaker();
         ex = Executors.newFixedThreadPool(6);
         this.agency = agency;
@@ -62,6 +61,12 @@ public class MainMenu extends JFrame implements ActionListener {
         mainPanel.add(optionPanel, BorderLayout.SOUTH);
         add(mainPanel);
         setVisible(true);
+    }
+
+    public static MainMenu getInstance(Agency agency){
+        if(mainMenu == null)
+            mainMenu = new MainMenu(agency);
+        return mainMenu;
     }
 
     private void BuildImagePanel(Agency agency) throws IOException {
@@ -214,11 +219,6 @@ public class MainMenu extends JFrame implements ActionListener {
                 }
             }
         }
-    }
-
-    public Image SetFlagsSize(ImageIcon flag) {
-        Image fixedFlag = flag.getImage();
-        return fixedFlag.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
     }
 
     public void refresh() {

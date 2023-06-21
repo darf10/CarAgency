@@ -109,7 +109,7 @@ public class CreateAgency extends JFrame{
                     JOptionPane.showMessageDialog(null, "Vehicles added successfully");
                     dispose();
                     CreateVehicle.setState();
-                    new MainMenu(agency);
+                    MainMenu.getInstance(agency);
                 }, ThreadLocalRandom.current().nextInt(3, 9), TimeUnit.SECONDS);
             }
         });

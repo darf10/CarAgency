@@ -35,15 +35,7 @@ public class HybridAirplane extends Vehicle implements AirVehicleI,SeaVehicleI,L
 
     @Override
     public void move(double distance){
-        synchronized (LandVehicle.class) {
-            synchronized (SeaVehicle.class) {
-                synchronized (AirVehicle.class) {
-                    landVehicle.move(distance);
-                    seaVehicle.move(distance);
-                    airVehicle.move(distance);
-                }
-            }
-        }
+        super.move(distance);
     }
 
     @Override
@@ -126,7 +118,13 @@ public class HybridAirplane extends Vehicle implements AirVehicleI,SeaVehicleI,L
 
     @Override
     public String toString() {
-        return "Hybrid Airplane: "+"<br>"+seaVehicle.toString()+"The wheel count is " + getWheel_count() +"<br>"+
+        String output;
+        output = "Under "+getFlag()+" flag"+"<br>";
+        if(getSail_with_wind())
+            output += " sails with the wind"+"<br>";
+        else
+            output += " sails without the wind"+"<br>";
+        return "Hybrid Airplane: "+"<br>"+super.toString()+output+"The wheel count is " + getWheel_count() +"<br>"+
                 "The appropriate road type is " + getRoad_type()+ "<br>" + "The use type is: " + getUse_type() + "<br>"+"The fuel consumption is: " + getFuel_consumption() + "<br>"+"The average life span is: " +getAverage_life_span()+"<br>";
     }
 }

@@ -33,11 +33,6 @@ public class Frigate extends SeaVehicle implements Engine, SeaVehicleI{
     }
 
     @Override
-    public Frigate clone() throws CloneNotSupportedException {
-        return new Frigate(this);
-    }
-
-    @Override
     public String toString(){
         return "Frigate: " +"<br>"+ super.toString()+ "The fuel consumption is: "+getFuel_consumption()+"<br>"+" and the average life span is: "+getAverage_life_span()+"<br>";
     }

@@ -10,7 +10,7 @@ public class StaticLocks {
     private static int[] registerCount;
 
     public StaticLocks() {
-        registerCount = new int[]{0,0,0};
+        registerCount = new int[]{0, 0, 0};
         seaLock = new ReentrantLock();
         airLock = new ReentrantLock();
         landLock = new ReentrantLock();
@@ -18,25 +18,30 @@ public class StaticLocks {
     }
 
     public static boolean tryRegister(int[] lockVal) {
-        for(int i = 0; i<lockVal.length; i++){
-            if(registerCount[i] < 7) {
-                registerCount[i] += lockVal[i];
-                if(registerCount[i] == 7)
-                    locks[i].lock();
-            }
-            else
-                return false;
+        int count = 0;
+        for (int i = 0; i < registerCount.length; i++) {
+            count += registerCount[i];
         }
-        return true;
+        if (count < 7) {
+
+            return true;
+        }
+        else
+            return false;
     }
-    public static void unregister(int[] lockVal){
-        for(int i = 0; i<lockVal.length; i++){
-            if(registerCount[i]>0){
-                registerCount[i]-=lockVal[i];
+}
+
+    public static void unregister(int[] lockVal) {
+        for (int i = 0; i < lockVal.length; i++) {
+            if (registerCount[i] > 0) {
+                registerCount[i] -= lockVal[i];
             }
         }
     }
-    public static int[] getRegistered(){return registerCount;}
+
+    public static int[] getRegistered() {
+        return registerCount;
+    }
 
 }
 

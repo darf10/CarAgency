@@ -37,12 +37,7 @@ public class Amphibious extends Vehicle implements LandVehicleI,SeaVehicleI, Eng
     }
     @Override
     public void move(double distance){
-        synchronized (LandVehicle.class) {
-            synchronized (SeaVehicle.class) {
-                landVehicle.move(distance);
-                seaVehicle.move(distance);
-            }
-        }
+        super.move(distance);
     }
 
     @Override
@@ -117,7 +112,13 @@ public class Amphibious extends Vehicle implements LandVehicleI,SeaVehicleI, Eng
 
     @Override
     public String toString() {
-        return "Amphibious: "+"<br>"+seaVehicle.toString()+"The wheel count is " + getWheel_count() +"<br>"+
+        String output;
+        output = "Under "+getFlag()+" flag"+"<br>";
+        if(getSail_with_wind())
+            output += " sails with the wind"+"<br>";
+        else
+            output += " sails without the wind"+"<br>";
+        return "Amphibious: "+"<br>"+super.toString()+output+"The wheel count is " + getWheel_count() +"<br>"+
                 "The appropriate road type is " + getRoad_type()+"<br>"+"The fuel consumption is: "+getFuel_consumption()+"<br>"+"The average life span is: "+getAverage_life_span()+"<br>";
     }
     @Override

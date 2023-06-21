@@ -28,9 +28,7 @@ public class SeaVehicle extends Vehicle implements SeaVehicleI{
     }
     @Override
     public void move(double distance){
-        synchronized (AirVehicle.class) {
-            super.move(distance);
-        }
+        super.move(distance);
     }
 
     @Override

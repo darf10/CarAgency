@@ -12,9 +12,6 @@ public class ElectricBicycle extends TwoWheeledVehicle implements Engine{
         setFuel_consumption(20);
         this.average_life_span = average_life_span;
     }
-
-
-
     public ElectricBicycle (ElectricBicycle target){
         super(target);
         this.fuel_consumption = target.fuel_consumption;
@@ -23,10 +20,6 @@ public class ElectricBicycle extends TwoWheeledVehicle implements Engine{
     public double getFuel_consumption(){ return fuel_consumption;}
     public void setFuel_consumption(double fuel_consumption){this.fuel_consumption = fuel_consumption;}
     public double getAverage_life_span(){return average_life_span;}
-    @Override
-    public ElectricBicycle clone() throws CloneNotSupportedException {
-        return new ElectricBicycle(this);
-    }
     @Override
     public boolean equals(Vehicle o) {
         if (this == o) return true;

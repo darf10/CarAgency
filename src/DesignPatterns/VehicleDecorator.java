@@ -83,7 +83,6 @@ public class VehicleDecorator implements VehicleI {
 
     @Override
     public void reset_distance() {
-        Agency.addTotalDistance(-this.vehicle.getDistance());
         this.vehicle.reset_distance();
     }
 

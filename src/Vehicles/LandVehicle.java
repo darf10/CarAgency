@@ -26,17 +26,9 @@ public class LandVehicle extends Vehicle implements LandVehicleI{
         this.wheel_count = target.wheel_count;
         this.road_type = target.road_type;
     }
-
-    @Override
-    public LandVehicle clone() throws CloneNotSupportedException {
-        return new LandVehicle(this);
-    }
-
     @Override
     public void move(double distance){
-        synchronized (AirVehicle.class) {
-            super.move(distance);
-        }
+        super.move(distance);
     }
 
     @Override
