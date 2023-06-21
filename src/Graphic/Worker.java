@@ -5,7 +5,11 @@ import Vehicles.*;
 import System.*;
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Time;
+import java.util.TimerTask;
+import java.util.Timer;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Worker extends SwingWorker<Void, String> {
     private JFrame frame;
@@ -15,6 +19,7 @@ public class Worker extends SwingWorker<Void, String> {
     private long distance;
     public VehicleDecorator curVehicle;
     private final CountDownLatch cdl;
+    private StaticLocks lock_instance;
 
     public Worker(MainMenu menu, String type, VehicleDecorator curVehicle) {
         cdl = new CountDownLatch(1);
@@ -153,17 +158,10 @@ public class Worker extends SwingWorker<Void, String> {
         JTextField textField = new JTextField(20);
         JButton confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(e -> {
-            if (curVehicle.getLock().tryLock()) {
-                curVehicle.setStatus("Performing a test drive");
-                menu.refresh();
-                distance = Long.parseLong(textField.getText());
-                moveVehicle(distance);
-                frame.dispose();
-            }else {
-                JOptionPane.showMessageDialog(null, "Vehicle currently unavailable for test drive");
-                cdl.countDown();
-                frame.dispose();
-            }
+            distance = Long.parseLong(textField.getText());
+            moveVehicle(distance);
+            frame.dispose();
+
         });
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(e -> {
@@ -181,26 +179,22 @@ public class Worker extends SwingWorker<Void, String> {
     }
 
     private void moveVehicle(long distance) {
-        if(StaticLocks.tryRegister()) {
-            curVehicle.move(distance);
-            Executors.newSingleThreadScheduledExecutor().schedule(() -> {
-                StaticLocks.unregister();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                curVehicle.move(distance);
+                menu.refresh();
                 cdl.countDown();
                 JOptionPane.showMessageDialog(null, "Test drive completed");
-                curVehicle.setStatus("Available");
-                menu.refresh();
-            }, distance*100, TimeUnit.MILLISECONDS);
-
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "There are no test drivers available");
-            cdl.countDown();
-        }
+            }
+        };
+        Timer time = new Timer();
+        time.schedule(task, 100 * distance);
     }
 
     private boolean checkExit() {
-        int registered = StaticLocks.getRegistered();
-        if(registered != 0)
+        AtomicInteger registered = menu.getAgency().getLock().getLockCount();
+        if(registered.get() != 0)
             return false;
         for (int i = 0; i < menu.getAgency().getSize(); i++) {
             if (menu.getAgency().getVehicleAt(i).getLock().isLocked())
@@ -212,10 +206,22 @@ public class Worker extends SwingWorker<Void, String> {
     @Override
     protected Void doInBackground() throws InterruptedException {
         switch (type) {
-            case "TestDrive" -> {
-                setTestDriveFrame();
-                cdl.await();
-                curVehicle.getLock().unlock();
+            case "TestDrive" -> { // PROBLEM WHEN LOCK INSTANCE == NULL IF VEHICLE GOT BLOCKED BY ANOTHER
+                lock_instance = StaticLocks.getInstance();
+                if (!curVehicle.getLock().isLocked() && lock_instance != null) {
+                    setTestDriveFrame();
+                    curVehicle.getLock().lock();
+                    lock_instance.lock();
+                    curVehicle.setStatus("Performing test drive");
+                    menu.refresh();
+                    cdl.await();
+                    lock_instance.unlock();
+                    curVehicle.getLock().unlock();
+                    curVehicle.setStatus("Available");
+                    menu.refresh();
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Vehicle is not ready for test drive");
             }
             case "Buy" -> {
                 if (curVehicle.getLock().tryLock())
@@ -241,12 +247,5 @@ public class Worker extends SwingWorker<Void, String> {
             }
         }
         return null;
-    }
-
-    @Override
-    protected void done() {
-        if(curVehicle != null)
-            if (curVehicle.getLock().isLocked())
-                curVehicle.getLock().unlock();
     }
 }

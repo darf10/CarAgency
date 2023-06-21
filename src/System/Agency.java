@@ -9,10 +9,10 @@ import java.util.*;
 public class Agency {
     private VehicleDecorator[] vehicles;
     private int size;
+    private StaticLocks lock;
     private static double totalDistance = 0;
     public Agency() {
         vehicles = null;
-        StaticLocks init = new StaticLocks();
     }
     public void BuildJeep(String model, double max_speed,ImageIcon image, double fuel_consumption, double average_life_span,String color) {
         Jeep obj = new Jeep(model, max_speed, image, fuel_consumption, average_life_span);
@@ -133,4 +133,5 @@ public class Agency {
             this.vehicles[i] = vehicleMemento.getVehicleAt(i);
         }
     }
+    public StaticLocks getLock(){return lock;}
 }

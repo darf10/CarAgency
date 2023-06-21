@@ -1,40 +1,28 @@
 package System;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class StaticLocks {
-    private static int registerCount;
-    private static ReentrantLock lock;
+public class StaticLocks extends ReentrantLock {
+    private static AtomicInteger locksCount = new AtomicInteger(0);
+    private static final int maxCount = 2;
 
-    public StaticLocks() {
-        registerCount = 0;
-        lock = new ReentrantLock();
+    private StaticLocks() {
+        locksCount.incrementAndGet();
+    }
+    public static StaticLocks getInstance(){
+        if(maxCount - locksCount.addAndGet(0) > 0)
+            return new StaticLocks();
+        return null;
     }
 
-    public static boolean tryRegister() {
-        if (registerCount < 7) {
-            registerCount++;
-            if (registerCount == 7) {
-                lock.lock();
-            }
-        }
-        else
-            return false;
-        return true;
+    public void unlock() {
+        super.unlock();
+        locksCount.decrementAndGet();
     }
 
-    public static void unregister() {
-        if(registerCount == 7){
-            lock.unlock();
-        }
-        if(registerCount>0){
-            registerCount--;
-        }
+    public AtomicInteger getLockCount() {
+        return locksCount;
     }
-
-    public static int getRegistered() {
-        return registerCount;
-    }
-
 }
 
