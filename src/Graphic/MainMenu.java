@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MainMenu extends JFrame implements ActionListener {
     private JButton addButton, resetButton, changeFlagButton, inventoryButton, testDriveButton, buyButton, exitButton, saveButton, loadButton;
-    private JPanel mainPanel, imagePanel, optionPanel;
+    private JPanel mainPanel, imagePanel, optionPanel, totalDistancePanel;
     private JComboBox<ImageIcon> flagButton;
     private JScrollPane scrollBar;
     private Vector<JToggleButton> images;
@@ -31,7 +31,8 @@ public class MainMenu extends JFrame implements ActionListener {
     private VehicleDecorator curVehicle;
     private ExecutorService ex;
     private MementoCaretaker mementoCaretaker;
-
+    private JLabel totalDistance;
+    private String currentDistance;
     private VehicleMemento vehicleMemento;
 
     public MainMenu(Agency agency) {
@@ -39,6 +40,11 @@ public class MainMenu extends JFrame implements ActionListener {
         ex = Executors.newFixedThreadPool(6);
         this.agency = agency;
         imagePanel = new JPanel(new FlowLayout());
+        totalDistancePanel = new JPanel(new BorderLayout());
+        totalDistance = new JLabel();
+        currentDistance = "Total Distance: " + String.valueOf(agency.getTotalDistance());
+        totalDistance.setText(currentDistance);
+        totalDistancePanel.add(totalDistance,BorderLayout.CENTER);
         setTitle("Your Agency");
         setSize(840, 680);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -51,6 +57,7 @@ public class MainMenu extends JFrame implements ActionListener {
         BuildOptionPanel();
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(totalDistancePanel,BorderLayout.NORTH);
         mainPanel.add(imagePanel, BorderLayout.CENTER);
         mainPanel.add(optionPanel, BorderLayout.SOUTH);
         add(mainPanel);
@@ -221,6 +228,10 @@ public class MainMenu extends JFrame implements ActionListener {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        currentDistance = "Total Distance: " + String.valueOf(agency.getTotalDistance());
+        totalDistance.setText(currentDistance);
+        totalDistance.revalidate();
+        totalDistance.repaint();
     }
 
     public Agency getAgency() {

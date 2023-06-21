@@ -1,6 +1,7 @@
 package Graphic;
 import System.Agency;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -42,6 +43,14 @@ public class InventoryFrame extends JFrame {
         for (int i = 0; i < agency.getSize(); i++) {
             images.add(new JToggleButton(agency.getVehicleAt(i).getImage()));
             images.get(i).setPreferredSize(new Dimension(130, 90));
+            switch (agency.getVehicleAt(i).getColor()) {
+                case "White" -> images.get(i).setBorder(new LineBorder(Color.WHITE, 5));
+                case "Black" -> images.get(i).setBorder(new LineBorder(Color.BLACK, 5));
+                case "Red" -> images.get(i).setBorder(new LineBorder(Color.RED, 5));
+                case "Blue" -> images.get(i).setBorder(new LineBorder(Color.BLUE, 5));
+                case "Green" -> images.get(i).setBorder(new LineBorder(Color.GREEN, 5));
+                case "Yellow" -> images.get(i).setBorder(new LineBorder(Color.YELLOW, 5));
+            }
             images.get(i).setToolTipText("<html>"+agency.getVehicleAt(i).toString()+"</html>");
         }
         for (JToggleButton image : images) {

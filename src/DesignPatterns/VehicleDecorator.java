@@ -1,7 +1,7 @@
 package DesignPatterns;
 
 import Vehicles.*;
-
+import System.*;
 import javax.swing.*;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -83,6 +83,7 @@ public class VehicleDecorator implements VehicleI {
 
     @Override
     public void reset_distance() {
+        Agency.addTotalDistance(-this.vehicle.getDistance());
         this.vehicle.reset_distance();
     }
 
