@@ -10,32 +10,44 @@ public class VehicleDecorator implements VehicleI {
     private String color;
     private String status;
 
-    public VehicleDecorator(Vehicle vehicle, String color){
+    public VehicleDecorator(Vehicle vehicle, String color) {
         this.vehicle = vehicle;
         this.color = color;
         this.setStatus("Available");
     }
-    public VehicleDecorator(VehicleDecorator target){
+
+    public VehicleDecorator(VehicleDecorator target) {
         this.vehicle = target.vehicle;
         this.color = target.color;
         this.status = target.status;
     }
 
     public VehicleDecorator makeCopy() {
-        VehicleDecorator copy = new VehicleDecorator(vehicle.makeCopy(),this.color);
+        VehicleDecorator copy = new VehicleDecorator(vehicle.makeCopy(), this.color);
         copy.setStatus(this.status);
         return copy;
     }
 
-    public void setStatus(String status){
+    public void setStatus(String status) {
         this.status = status;
     }
-    public Vehicle getVehicle(){return vehicle;}
-    public String getColor(){return color;}
-    public String getStatus(){synchronized(this){return status;}}
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public String getStatus() {
+        synchronized (this) {
+            return status;
+        }
+    }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Status: " + this.status + "<br>" + this.vehicle.toString();
     }
 

@@ -2,6 +2,7 @@ package Graphic;
 
 import DesignPatterns.MementoCaretaker;
 import DesignPatterns.VehicleDecorator;
+import DesignPatterns.VehicleMemento;
 import System.Agency;
 import Vehicles.*;
 
@@ -29,7 +30,10 @@ public class MainMenu extends JFrame implements ActionListener {
     private Agency agency;
     private VehicleDecorator curVehicle;
     private ExecutorService ex;
-    MementoCaretaker mementoCaretaker;
+    private MementoCaretaker mementoCaretaker;
+
+    private VehicleMemento vehicleMemento;
+
     public MainMenu(Agency agency) {
         mementoCaretaker = new MementoCaretaker();
         ex = Executors.newFixedThreadPool(6);
@@ -60,11 +64,11 @@ public class MainMenu extends JFrame implements ActionListener {
             images.get(i).setPreferredSize(new Dimension(130, 90));
             switch (agency.getVehicleAt(i).getColor()) {
                 case "White" -> images.get(i).setBorder(new LineBorder(Color.WHITE, 5));
-                case "Black" -> images.get(i).setBorder(new LineBorder(Color.BLACK,5));
-                case "Red" -> images.get(i).setBorder(new LineBorder(Color.RED,5));
-                case "Blue" -> images.get(i).setBorder(new LineBorder(Color.BLUE,5));
-                case "Green" -> images.get(i).setBorder(new LineBorder(Color.GREEN,5));
-                case "Yellow" -> images.get(i).setBorder(new LineBorder(Color.YELLOW,5));
+                case "Black" -> images.get(i).setBorder(new LineBorder(Color.BLACK, 5));
+                case "Red" -> images.get(i).setBorder(new LineBorder(Color.RED, 5));
+                case "Blue" -> images.get(i).setBorder(new LineBorder(Color.BLUE, 5));
+                case "Green" -> images.get(i).setBorder(new LineBorder(Color.GREEN, 5));
+                case "Yellow" -> images.get(i).setBorder(new LineBorder(Color.YELLOW, 5));
             }
             images.get(i).setToolTipText("<html>" + agency.getVehicleAt(i).toString() + "</html>");
             images.get(i).addActionListener(this);
@@ -146,41 +150,41 @@ public class MainMenu extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == testDriveButton) {
-            if(!curVehicle.getLock().isLocked()) {
+            if (!curVehicle.getLock().isLocked()) {
                 new Worker(this, "TestDrive", curVehicle).execute();
                 buyButton.setVisible(false);
                 testDriveButton.setVisible(false);
                 refresh();
-            }
-            else
+            } else
                 JOptionPane.showMessageDialog(null, "Vehicle is not available");
 
         }
         if (e.getSource() == buyButton) {
-            if(!curVehicle.getLock().isLocked()) {
-                new Worker(this, "Buy",curVehicle).execute();
+            if (!curVehicle.getLock().isLocked()) {
+                new Worker(this, "Buy", curVehicle).execute();
                 buyButton.setVisible(false);
                 testDriveButton.setVisible(false);
                 refresh();
-            }
-            else
+            } else
                 JOptionPane.showMessageDialog(null, "Vehicle is not available");
 
         }
         if (e.getSource() == exitButton) {
-            new Worker(this, "Exit",curVehicle).execute();
+            new Worker(this, "Exit", curVehicle).execute();
         }
+
         if (e.getSource() == saveButton) {
-            try {
-                mementoCaretaker.saveMemento(agency.createMemento());
-                JOptionPane.showMessageDialog(null, "Saved");
-            } catch (CloneNotSupportedException exc) {
-                throw new RuntimeException(exc);
-            }
+            vehicleMemento = agency.createMemento();
+            mementoCaretaker.saveMemento(vehicleMemento);
+            JOptionPane.showMessageDialog(null, "Saved");
+
             refresh();
         }
         if (e.getSource() == loadButton) {
-            mementoCaretaker.getMemento(agency);
+            if (mementoCaretaker.getAmount() != 0) {
+                vehicleMemento = mementoCaretaker.getMemento();
+            }
+            agency.restoreMemento(vehicleMemento);
             JOptionPane.showMessageDialog(null, "Loading");
             refresh();
         }

@@ -123,7 +123,7 @@ public class Agency {
     public static void addTotalDistance(double distance){
         totalDistance += distance;
     }
-    public VehicleMemento createMemento() throws CloneNotSupportedException {
+    public VehicleMemento createMemento() {
         return new VehicleMemento(vehicles);
     }
     public void restoreMemento(VehicleMemento vehicleMemento){
