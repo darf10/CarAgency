@@ -183,9 +183,13 @@ public class MainMenu extends JFrame implements ActionListener {
         if (e.getSource() == loadButton) {
             if (mementoCaretaker.getAmount() != 0) {
                 vehicleMemento = mementoCaretaker.getMemento();
+                agency.restoreMemento(vehicleMemento);
+                JOptionPane.showMessageDialog(null, "Loaded");
             }
-            agency.restoreMemento(vehicleMemento);
-            JOptionPane.showMessageDialog(null, "Loading");
+            else {
+                JOptionPane.showMessageDialog(null, "No saves to load.");
+            }
+
             refresh();
         }
         for (int i = 0; i < images.size(); i++) {

@@ -124,9 +124,14 @@ public class Agency {
         totalDistance += distance;
     }
     public VehicleMemento createMemento() {
-        return new VehicleMemento(vehicles);
+        return new VehicleMemento(vehicles, size, totalDistance);
     }
     public void restoreMemento(VehicleMemento vehicleMemento){
-        this.vehicles = vehicleMemento.getMemento();
+        this.size = vehicleMemento.getSize();
+        totalDistance = vehicleMemento.getTotalDistance();
+        this.vehicles = new VehicleDecorator[size];
+        for (int i=0; i<size;i++){
+            this.vehicles[i] = vehicleMemento.getVehicleAt(i);
+        }
     }
 }
