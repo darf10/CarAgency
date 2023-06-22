@@ -21,7 +21,7 @@ public class StaticLocks extends ReentrantLock {
         locksCount.decrementAndGet();
     }
 
-    public AtomicInteger getLockCount() {
+    public static AtomicInteger getLockCount() {
         return locksCount;
     }
 }

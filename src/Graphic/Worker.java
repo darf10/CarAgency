@@ -193,7 +193,7 @@ public class Worker extends SwingWorker<Void, String> {
     }
 
     private boolean checkExit() {
-        AtomicInteger registered = menu.getAgency().getLock().getLockCount();
+        AtomicInteger registered = StaticLocks.getLockCount();
         if(registered.get() != 0)
             return false;
         for (int i = 0; i < menu.getAgency().getSize(); i++) {
@@ -206,7 +206,7 @@ public class Worker extends SwingWorker<Void, String> {
     @Override
     protected Void doInBackground() throws InterruptedException {
         switch (type) {
-            case "TestDrive" -> { // PROBLEM WHEN LOCK INSTANCE == NULL IF VEHICLE GOT BLOCKED BY ANOTHER
+            case "TestDrive" -> {
                 lock_instance = StaticLocks.getInstance();
                 if (!curVehicle.getLock().isLocked() && lock_instance != null) {
                     setTestDriveFrame();
@@ -242,6 +242,7 @@ public class Worker extends SwingWorker<Void, String> {
                 if (checkExit()) {
                     JOptionPane.showMessageDialog(null, "Exit successfully");
                     menu.dispose();
+                    System.exit(1);
                 } else
                     JOptionPane.showMessageDialog(null, "Cant exit program, close all opened windows.");
             }
