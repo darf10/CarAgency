@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class StaticLocks extends ReentrantLock {
     private static AtomicInteger locksCount = new AtomicInteger(0);
-    private static final int maxCount = 2;
+    private static final int maxCount = 7;
 
     private StaticLocks() {
         locksCount.incrementAndGet();
