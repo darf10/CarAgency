@@ -29,9 +29,9 @@ public class MainMenu extends JFrame implements ActionListener {
     private Agency agency;
     private VehicleDecorator curVehicle;
     private ExecutorService ex;
-    private MementoCaretaker mementoCaretaker;
     private JLabel totalDistance;
     private String currentDistance;
+    private MementoCaretaker mementoCaretaker;
     private VehicleMemento vehicleMemento;
 
     private MainMenu(Agency agency) {
@@ -181,6 +181,7 @@ public class MainMenu extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Vehicle is not available");
 
         }
+
         if (e.getSource() == exitButton) {
             new Worker(this, "Exit", curVehicle).execute();
         }

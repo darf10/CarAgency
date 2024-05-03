@@ -221,7 +221,7 @@ public class Worker extends SwingWorker<Void, String> {
                     menu.refresh();
                 }
                 else
-                    JOptionPane.showMessageDialog(null, "Vehicle is not ready for test drive");
+                    JOptionPane.showMessageDialog(null, "Can't preform test drive");
             }
             case "Buy" -> {
                 if (curVehicle.getLock().tryLock())
