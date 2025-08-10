@@ -1,10 +1,10 @@
-Run Instructions
+## Run Instructions
 
 1. Make sure you have **Java 8+** installed.
-2. Navigate to the project src/Main directory.
+2. Navigate to the project `src/main` directory.
 3. Compile and run the program:
-   either with for bash/cmd:
-     javac Program.java
-     java -cp Program
-   or use java IDE to compile and run /src/main/Program.java
-   
+
+   **In Bash / PowerShell / CMD:**
+   ```bash
+   javac Program.java
+   java Program
