@@ -164,12 +164,12 @@ public class CreateVehicle extends JFrame {
         panel.add(new JLabel("Flag:"));
         String[] flagString = {"Israel", "USA", "Germany", "Italy", "Somalia", "Pirate"};
         ImageIcon[] flagImages = {
-                new ImageIcon("Israel.png"),
-                new ImageIcon("USA.png"),
-                new ImageIcon("Germany.png"),
-                new ImageIcon("Italy.png"),
-                new ImageIcon("Somalia.png"),
-                new ImageIcon("Pirate.png")
+                new ImageIcon("images/Israel.png"),
+                new ImageIcon("images/USA.png"),
+                new ImageIcon("images/Germany.png"),
+                new ImageIcon("images/Italy.png"),
+                new ImageIcon("images/Somalia.png"),
+                new ImageIcon("images/Pirate.png")
         };
         ImageIcon[] flags = new ImageIcon[flagImages.length];
         for (int i = 0; i < flagImages.length; i++)

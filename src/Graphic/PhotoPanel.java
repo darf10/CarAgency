@@ -41,7 +41,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
             for(int i = 1; i <7 ; i++)
                 if(buttons[i].isSelected())
                     buttons[i].setSelected(false);
-            selectedImage = new ImageIcon("jeep.png");
+            selectedImage = new ImageIcon("images/jeep.png");
             Image resizedImage = selectedImage.getImage().getScaledInstance(120, 90, Image.SCALE_SMOOTH);
             selectedImage = new ImageIcon(resizedImage);
         }
@@ -49,7 +49,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
             for(int i = 0; i <7 ; i++)
                 if(buttons[i].isSelected() && i != 1)
                     buttons[i].setSelected(false);
-            selectedImage = new ImageIcon("frigate.png");
+            selectedImage = new ImageIcon("images/frigate.png");
             Image resizedImage = selectedImage.getImage().getScaledInstance(120, 90, Image.SCALE_SMOOTH);
             selectedImage = new ImageIcon(resizedImage);
         }
@@ -57,7 +57,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
             for(int i = 0; i <7 ; i++)
                 if(buttons[i].isSelected() && i != 2)
                     buttons[i].setSelected(false);
-            selectedImage = new ImageIcon("playing glider.png");
+            selectedImage = new ImageIcon("images/playing glider.png");
             Image resizedImage = selectedImage.getImage().getScaledInstance(120, 90, Image.SCALE_SMOOTH);
             selectedImage = new ImageIcon(resizedImage);
         }
@@ -65,7 +65,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
             for(int i = 0; i <7 ; i++)
                 if(buttons[i].isSelected() && i != 3)
                     buttons[i].setSelected(false);
-            selectedImage = new ImageIcon("spying glider.png");
+            selectedImage = new ImageIcon("images/spying glider.png");
             Image resizedImage = selectedImage.getImage().getScaledInstance(120, 90, Image.SCALE_SMOOTH);
             selectedImage = new ImageIcon(resizedImage);
         }
@@ -73,7 +73,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
             for(int i = 0; i <7 ; i++)
                 if(buttons[i].isSelected() && i != 4)
                     buttons[i].setSelected(false);
-            selectedImage = new ImageIcon("amphibious.png");
+            selectedImage = new ImageIcon("images/amphibious.png");
             Image resizedImage = selectedImage.getImage().getScaledInstance(120, 90, Image.SCALE_SMOOTH);
             selectedImage = new ImageIcon(resizedImage);
         }
@@ -81,7 +81,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
             for(int i = 0; i <7 ; i++)
                 if(buttons[i].isSelected() && i != 5)
                     buttons[i].setSelected(false);
-            selectedImage = new ImageIcon("bicycle.png");
+            selectedImage = new ImageIcon("images/bicycle.png");
             Image resizedImage = selectedImage.getImage().getScaledInstance(120, 90, Image.SCALE_SMOOTH);
             selectedImage = new ImageIcon(resizedImage);
         }
@@ -89,7 +89,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
             for(int i = 0; i <7 ; i++)
                 if(buttons[i].isSelected() && i != 6)
                     buttons[i].setSelected(false);
-            selectedImage = new ImageIcon("cruiseship.png");
+            selectedImage = new ImageIcon("images/cruiseship.png");
             Image resizedImage = selectedImage.getImage().getScaledInstance(120, 90, Image.SCALE_SMOOTH);
             selectedImage = new ImageIcon(resizedImage);
         }
@@ -116,7 +116,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
     }
 
     private void setButtons() throws IOException {
-        ImageIcon image = new ImageIcon("jeep.png");
+        ImageIcon image = new ImageIcon("images/jeep.png");
         Image resizedImage = image.getImage().getScaledInstance(90, 60, Image.SCALE_SMOOTH);
         buttons[0] = new JToggleButton(new ImageIcon(resizedImage));
         buttons[0].setFocusable(false);
@@ -124,7 +124,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
         buttons[0].addActionListener(this);
         buttonPanel.add(buttons[0]);
 
-        image = new ImageIcon("frigate.png");
+        image = new ImageIcon("images/frigate.png");
         resizedImage = image.getImage().getScaledInstance(90, 60, Image.SCALE_SMOOTH);
         buttons[1] = new JToggleButton(new ImageIcon(resizedImage));
         buttons[1].setFocusable(false);
@@ -132,7 +132,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
         buttons[1].addActionListener(this);
         buttonPanel.add(buttons[1]);
 
-        image = new ImageIcon("playing glider.png");
+        image = new ImageIcon("images/playing glider.png");
         resizedImage = image.getImage().getScaledInstance(90, 60, Image.SCALE_SMOOTH);
         buttons[2] = new JToggleButton(new ImageIcon(resizedImage));
         buttons[2].setFocusable(false);
@@ -140,7 +140,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
         buttons[2].addActionListener(this);
         buttonPanel.add(buttons[2]);
 
-        image = new ImageIcon("spying glider.png");
+        image = new ImageIcon("images/spying glider.png");
         resizedImage = image.getImage().getScaledInstance(90, 60, Image.SCALE_SMOOTH);
         buttons[3] = new JToggleButton(new ImageIcon(resizedImage));
         buttons[3].setFocusable(false);
@@ -148,7 +148,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
         buttons[3].addActionListener(this);
         buttonPanel.add(buttons[3]);
 
-        image = new ImageIcon("amphibious.png");
+        image = new ImageIcon("images/amphibious.png");
         resizedImage = image.getImage().getScaledInstance(90, 60, Image.SCALE_SMOOTH);
         buttons[4] = new JToggleButton(new ImageIcon(resizedImage));
         buttons[4].setFocusable(false);
@@ -156,7 +156,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
         buttons[4].addActionListener(this);
         buttonPanel.add(buttons[4]);
 
-        image = new ImageIcon("bicycle.png");
+        image = new ImageIcon("images/bicycle.png");
         resizedImage = image.getImage().getScaledInstance(90, 60, Image.SCALE_SMOOTH);
         buttons[5] = new JToggleButton(new ImageIcon(resizedImage));
         buttons[5].setFocusable(false);
@@ -164,7 +164,7 @@ public class PhotoPanel extends JPanel implements ActionListener{
         buttons[5].addActionListener(this);
         buttonPanel.add(buttons[5]);
 
-        image = new ImageIcon("cruiseship.png");
+        image = new ImageIcon("images/cruiseship.png");
         resizedImage = image.getImage().getScaledInstance(90, 60, Image.SCALE_SMOOTH);
         buttons[6] = new JToggleButton(new ImageIcon(resizedImage));
         buttons[6].setFocusable(false);
